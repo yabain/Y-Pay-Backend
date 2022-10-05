@@ -5,9 +5,10 @@
   "description": "Nest TypeScript starter repository",
   "license": "MIT",
   "scripts": {
+    "deploy":"npm ci && npm run build-dev && npm run start:prod",
     "prebuild": "rimraf dist",
-    "build": "env-cmd -f .env.prod nest build",
-    "build-dev": "env-cmd -f .env.dev nest build",
+    "build": "nest build",
+    "build-dev": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "env-cmd -f .env.dev nest start",
     "start:dev": "env-cmd -f .env.dev nest start --watch",

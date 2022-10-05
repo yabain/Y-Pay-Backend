@@ -6,7 +6,7 @@ import { MongoExceptionFilter } from './shared/exceptions';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const port = process.env.NODE_PORT || 3000;
+  const port = process.env.PORT || 3000;
 
   app.useGlobalPipes(new ValidationPipe({
     whitelist:true,
