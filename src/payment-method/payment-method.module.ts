@@ -3,15 +3,19 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { EncryptionSecurityService } from "src/shared/security";
 import { SharedModule } from "src/shared/shared.module";
 import { UserModule } from "src/user/user.module";
+import { PaymentMethodController } from "./controllers/payment-method.controller";
 import { CardMethodPayment, CardMethodPaymentSchema } from "./models";
 import { CardPaymentMethodService } from "./services";
 
 @Module({
-    controllers:[],
+    controllers:[
+        PaymentMethodController
+    ],
     imports:[
         SharedModule,
-        MongooseModule.forFeatureAsync([
+        MongooseModule.forFeatureAsync([            
             {
+                imports:[SharedModule],
                 name:CardMethodPayment.name,
                 useFactory:(encryptionSecurityService:EncryptionSecurityService)=>{
                     const schema = CardMethodPaymentSchema;
