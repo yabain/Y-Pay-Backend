@@ -11,5 +11,8 @@
       "include":"../.env.prod",
       "outDir":"./dist"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "plugins": []
+  }
 }

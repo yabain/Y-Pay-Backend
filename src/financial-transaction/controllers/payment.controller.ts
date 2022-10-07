@@ -1,9 +1,11 @@
 import { Body, Controller, Post, UseGuards,Req, HttpStatus, Get, Param, ParseUUIDPipe } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
 import { AuthJwtGuard as AppAuthJwtGuard } from "src/application/guards"
 import { CreateFinancialTransactionDTO } from "../dtos"
 import { PaymentService } from "../services"
 
+@ApiTags("Payment")
 @Controller("payment")
 export class PaymentController
 {

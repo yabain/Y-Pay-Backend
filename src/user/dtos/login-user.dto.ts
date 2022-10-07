@@ -1,5 +1,10 @@
 import { IsNotEmpty, IsString, Matches, MinLength } from "class-validator";
 
+/**
+ * @apiDefine LoginUserDTO Login user information
+ * @apiBody {String} email User email
+ * @apiBody {String {8..}} password User password
+ */
 export class LoginUserDTO
 {
     @IsNotEmpty()

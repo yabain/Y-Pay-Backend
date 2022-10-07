@@ -1,10 +1,12 @@
 import { Controller,Post,Delete, Param, UseGuards,Body, HttpStatus, Req } from "@nestjs/common"
+import { ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
 import { ObjectIDValidationPipe } from "src/shared/pipes";
 import { UserAuthGuard } from "src/user/guards";
 import { CreateCardPaymentMethodDTO } from "../dtos/create-card-payment-method.dto";
 import { CardPaymentMethodService } from "../services";
 
+@ApiTags("Payment Method")
 @UseGuards(UserAuthGuard)
 @Controller("payment-method")
 export class PaymentMethodController

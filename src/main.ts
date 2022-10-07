@@ -1,8 +1,10 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
 import { MongoExceptionFilter } from './shared/exceptions';
+import { AddSwaggerDoc } from './shared/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,6 +19,9 @@ async function bootstrap() {
   app.enableCors();
   app.useGlobalFilters(new MongoExceptionFilter())
   useContainer(app.select(AppModule),{fallbackOnErrors:true});
+
+  AddSwaggerDoc(app);
+
   await app.listen(port);
 }
 bootstrap();
