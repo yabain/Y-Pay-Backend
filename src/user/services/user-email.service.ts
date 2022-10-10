@@ -20,12 +20,30 @@ export class UserEmailService
 
     sendConfirmationEmail(user:User)
     {
+        // return this.emailService.sendEmail(
+        //     new Email()
+        //     .from(this.configService.get<string>("NO_REPLY_EMAIL_SENDER"))
+        //     .to(user.email)
+        //     .templateVar({})
+        //     .template(this.configService.get<string>("EMAIL_TEMPLATE_ACCOUNT_CONFIRMATION"))
+        // )
         return this.emailService.sendEmail(
             new Email()
             .from(this.configService.get<string>("NO_REPLY_EMAIL_SENDER"))
             .to(user.email)
             .templateVar({})
             .template(this.configService.get<string>("EMAIL_TEMPLATE_ACCOUNT_CONFIRMATION"))
+        )
+    }
+
+    sendTestEmail(user)
+    {
+        return this.emailService.sendEmail(
+            new Email()
+            .subject("Email Test ")
+            .from(this.configService.get<string>("NO_REPLY_EMAIL_SENDER"))
+            .to(user.email)
+            .content(`New Email from  ${user.email}`)
         )
     }
 }
