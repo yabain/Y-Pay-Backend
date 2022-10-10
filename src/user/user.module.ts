@@ -9,6 +9,9 @@ import { AuthLocalStrategy } from "./strategies";
 import { PasswordUtil } from "./utils";
 import { JWT_CONSTANT } from "src/shared/config";
 import { AuthJwtStrategy } from "./strategies/auth-jwt.strategy";
+import { SharedModule } from "src/shared/shared.module";
+import { UserEmailService } from "./services/user-email.service";
+import { EmailConfirmedGuard } from "./guards";
 
 
 @Module({
@@ -29,10 +32,18 @@ import { AuthJwtStrategy } from "./strategies/auth-jwt.strategy";
         JwtModule.register({
             secret:JWT_CONSTANT.secret,
             signOptions: { expiresIn: JWT_CONSTANT.expiresIn }
-        })
+        }),
+        SharedModule
     ],
     controllers:[AuthController],
-    providers:[UsersService,AuthService,AuthLocalStrategy,AuthJwtStrategy],
-    exports:[UsersService,AuthService,AuthJwtStrategy,JwtModule]
+    providers:[
+        UsersService,
+        AuthService,
+        AuthLocalStrategy,
+        AuthJwtStrategy,
+        UserEmailService,
+        EmailConfirmedGuard
+    ],
+    exports:[UsersService,AuthService,AuthJwtStrategy,JwtModule,UserEmailService,EmailConfirmedGuard]
 })
 export class UserModule{}

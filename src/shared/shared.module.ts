@@ -1,6 +1,8 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
+import { SES } from "aws-sdk";
+import { AwsSdkModule } from "nest-aws-sdk";
 import configuration from "./config/configuration";
 import { SecurityModule } from "./security/security.module";
 
@@ -17,12 +19,26 @@ import { SecurityModule } from "./security/security.module";
               uri:configService.get<string>("mongoURI")
             })
           }),
-        SecurityModule
+        SecurityModule,
+        AwsSdkModule.forRootAsync({
+          defaultServiceOptions:{
+            imports:[ConfigModule],
+            inject:[ConfigService],
+            useFactory:async (configService:ConfigService)=>({
+              region:configService.get<string>("AWS_SDK_REGION"),
+              profile:configService.get<string>("AWS_SDK_PROFILE")
+            })
+          },
+          services:[
+            SES
+          ]
+        })
     ],
     exports:[
         SecurityModule,
         ConfigModule,
-        MongooseModule
+        MongooseModule,
+        AwsSdkModule
     ]
 })
 export class SharedModule{}

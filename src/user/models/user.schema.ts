@@ -50,6 +50,9 @@ export class User
     country:string;
 
     @Prop({default:""})
+    phoneNumber:string;
+
+    @Prop({required:true})
     location:string;
 
     @Prop({require:true,enum:PERMISSIONS,default:PERMISSIONS.USER})

@@ -4,13 +4,13 @@
   "version": "1.0.0",
   "description": "Nest TypeScript starter repository",
   "license": "MIT",
-  "apidoc":{
-    "name":"Y-NKap API Documentation",
-    "version":"1.0.0",
-    "description":"API Description",
-    "title":"Y-Nkap API Documentation",
-    "url":"http://api.y-nkap.com",
-    "sampleUrl":"http://api-dev.y-nkap.com"
+  "apidoc": {
+    "name": "Y-NKap API Documentation",
+    "version": "1.0.0",
+    "description": "API Description",
+    "title": "Y-Nkap API Documentation",
+    "url": "http://api.y-nkap.com",
+    "sampleUrl": "http://api-dev.y-nkap.com"
   },
   "scripts": {
     "deploy": "npm ci && npm run build-dev && npm run start:prod",
@@ -28,7 +28,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "doc":"apidoc -i src -o docs"
+    "doc": "apidoc -i src -o docs"
   },
   "dependencies": {
     "@nestjs/axios": "^0.1.0",
@@ -41,11 +41,13 @@
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^6.1.2",
+    "aws-sdk": "^2.1231.0",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "env-cmd": "^10.1.0",
     "mongoose": "^6.5.4",
+    "nest-aws-sdk": "^3.0.0",
     "passport": "^0.6.0",
     "passport-http": "^0.3.0",
     "passport-jwt": "^4.0.0",

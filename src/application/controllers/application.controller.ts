@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpStatus, Post, Req, UseGuards } from "@nestjs/common"
 import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiOkResponse, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
-import { UserJwtAuthGuard } from "src/user/guards";
+import { EmailConfirmedGuard, UserJwtAuthGuard } from "src/user/guards";
 import { User } from "src/user/models";
 import { Wallet } from "src/wallet/models";
 import { CreateAppDTO } from "../dtos";
@@ -35,6 +35,7 @@ export class ApplicationController
      */
     @ApiOkResponse()
     @UseGuards(UserJwtAuthGuard)
+    @UseGuards(EmailConfirmedGuard)
     @Post('create')
     @ApiBody({type:CreateAppDTO})
     async createApp(@Req() request:Request, @Body() createAppDTO:CreateAppDTO)

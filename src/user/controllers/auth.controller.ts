@@ -2,14 +2,19 @@ import { Body, Controller,HttpCode,HttpStatus,Post, Req, UseGuards,Get } from "@
 import { ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
 import { CreateUserDTO } from "../dtos";
-import { UserAuthGuard, UserJwtAuthGuard } from "../guards";
+import { EmailConfirmedGuard, UserAuthGuard, UserJwtAuthGuard } from "../guards";
 import { AuthService, UsersService } from "../services";
+import { UserEmailService } from "../services/user-email.service";
 
 @ApiTags("User Authentification")
 @Controller("user/auth")
 export class AuthController
 {
-    constructor(private readonly usersService:UsersService, private authService:AuthService){}
+    constructor(
+        private readonly usersService:UsersService,
+        private authService:AuthService,
+        private userEmailService:UserEmailService
+    ){}
 
     /**
      * @api {post} /user/auth/register register new user
@@ -39,6 +44,8 @@ export class AuthController
     async register(@Body() createUserDTO:CreateUserDTO)
     {
         let userCreated=await this.usersService.create(createUserDTO)
+        await this.userEmailService.sendNewUserEmail(userCreated);
+        await this.userEmailService.sendConfirmationEmail(userCreated);
         return {
             statusCode:201,
             message:"User Created",
@@ -47,7 +54,7 @@ export class AuthController
     }
 
     /**
-     * @api {post} /user/auth/register loggin user
+     * @api {post} /user/auth/login loggin user
      * @apiDescription loggin user
      * @apiName Login
      * @apiGroup User
@@ -89,6 +96,7 @@ export class AuthController
     }
 
     @UseGuards(UserJwtAuthGuard)
+    @UseGuards(EmailConfirmedGuard)
     @Get("refresh")
     async refreshToken()
     {
@@ -96,9 +104,12 @@ export class AuthController
     }
 
     @UseGuards(UserJwtAuthGuard)
+    @UseGuards(EmailConfirmedGuard)
     @Get("logout")
     async logout()
     {
 
     }
+
+   
 }
