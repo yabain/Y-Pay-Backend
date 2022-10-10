@@ -5,6 +5,7 @@ import { SES } from "aws-sdk";
 import { AwsSdkModule } from "nest-aws-sdk";
 import configuration from "./config/configuration";
 import { SecurityModule } from "./security/security.module";
+import { EmailService } from "./services/emails";
 
 @Module({
     imports:[
@@ -32,13 +33,17 @@ import { SecurityModule } from "./security/security.module";
           services:[
             SES
           ]
-        })
+        }),
+    ],
+    providers:[
+      EmailService
     ],
     exports:[
         SecurityModule,
         ConfigModule,
         MongooseModule,
-        AwsSdkModule
+        AwsSdkModule,
+        EmailService
     ]
 })
 export class SharedModule{}

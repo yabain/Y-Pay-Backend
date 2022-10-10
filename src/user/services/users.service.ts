@@ -30,5 +30,14 @@ export class UsersService
     {
         return this.userModel.findOne<UserDocument>(userObj).exec()
     }
+    async update(filter:Record<string,any>,toUpdate:Record<string,any>,session=null)
+    {
+        return this.userModel.findOneAndUpdate(filter,toUpdate,{session,new:true});
+    }
+
+    async confirmedAccount(user)
+    {
+        return this.update({"email":user.email},{emailConfirmed:true})
+    }
     
 }

@@ -84,14 +84,16 @@ export class AuthController
     @Post("login")    
     async login(@Req() request:Request)
     {
+        let data:Record<string,any> = {
+            ...this.authService.login(request.user),
+            user:request.user
+
+        }
+        // await this.userEmailService.sendConfirmationEmail(data["access_token"])
         return {
             statusCode:HttpStatus.OK,
             message:"Authentication Success",
-            data:{
-                ...this.authService.login(request.user),
-                user:request.user
-
-            }
+            data
         }
     }
 
