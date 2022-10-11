@@ -2,7 +2,7 @@
 
 /**
  * @apiDefine apiError
- * @apiError  (500 Internal Server Error) InternalServerError  500 statusCode 
+ * @apiError  (Error 5xx) 500-InternalServerError  Internal Server Error
  * @apiUse apiInternalErrorExample
  */
 
@@ -14,6 +14,17 @@
  *  statusCode: 400
  *  error: "Bad Request",
  *  message:[ "firstName should not be empty"  ]
+ * }
+ */
+
+/**
+ * @apiDefine apiLoginOrPasswordIncorrectExampleUser
+ * @apiExample {json} Login Error (Example) 
+ * * HTTP/1.1 401 Unauthorized
+ * {
+ *  statusCode: 401
+ *  error: "Authentification error",
+ *  message:[ "Email/password incorrect"  ]
  * }
  */
 

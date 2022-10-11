@@ -9,12 +9,14 @@ export class MongoExceptionFilter implements ExceptionFilter<MongoError>
         const ctx = host.switchToHttp();
         const response = ctx.getResponse<Response>()
         const request = ctx.getRequest<Request>();
+        let error='Bad Request'
 
+        if(request.url.indexOf("register")) error="BadRegistrationRequest";
         response
         .status(400)
         .json({
             statusCode: 400,
-            error:'Bad Request',
+            error,
             message:[exception.errmsg,...exception.errorLabels]
         });
 
