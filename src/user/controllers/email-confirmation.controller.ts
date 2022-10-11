@@ -1,4 +1,5 @@
 import { BadRequestException, Controller, Get, HttpStatus, Req, UseGuards } from "@nestjs/common"
+import { Request } from "express";
 import { UserJwtAuthGuard } from "../guards";
 import { UsersService } from "../services";
 import { UserEmailService } from "../services/user-email.service";
@@ -12,9 +13,9 @@ export class EmailConfirmationController
     ){}
 
     @Get("send-confirmation")
-    async sendEmailConfirmation(@Req() request)
+    async sendEmailConfirmation(@Req() request:Request)
     {
-        let user = await this.userService.findOneByField({"email":request.user.email})
+        let user = await this.userService.findOneByField({"email":request.user["email"]})
         await this.userEmailService.sendConfirmationEmail(user)
         return {
             statusCode:HttpStatus.OK,
@@ -24,9 +25,9 @@ export class EmailConfirmationController
 
     @Get("confirm")
     @UseGuards(UserJwtAuthGuard)
-    async confirmEmail(@Req() request)
+    async confirmEmail(@Req() request:Request)
     {
-        let user = await this.userService.findOneByField({"email":request.user.email})
+        let user = await this.userService.findOneByField({"email":request.user["email"]})
         if(user.emailConfirmed) throw new BadRequestException({
             statusCode:HttpStatus.BAD_REQUEST,
             error:"EmailConfirmation",

@@ -14,7 +14,6 @@ export class EmailService
     {
         let email=emailObj.toJSON();
 
-        console.log("Email ",email)
         let params = {
             Source:email.from.toString(),
             Destination:{
