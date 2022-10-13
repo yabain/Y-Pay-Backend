@@ -28,7 +28,11 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "doc": "apidoc -i src -o docs"
+    "doc": "apidoc -i src -o docs",
+    "set-vars:dev": "aws s3 cp .env.dev s3://app-variables/y-nkap.env.dev --profile y-nkap",
+    "set-vars:prod": "aws s3 cp .env.prod s3://app-variables/y-nkap.env.prod --profile y-nkap",
+    "get-vars:dev": "aws s3 cp s3://app-variables/y-nkap.env.dev .env.dev --profile y-nkap",
+    "get-vars:prod": "aws s3 cp s3://app-variables/y-nkap.env.prod .env.prod --profile y-nkap"
   },
   "dependencies": {
     "@nestjs/axios": "^0.1.0",
