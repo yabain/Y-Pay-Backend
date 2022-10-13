@@ -3,32 +3,32 @@ import { InjectModel } from "@nestjs/mongoose"
 import { Model } from "mongoose";
 import { PartialType } from "@nestjs/mapped-types";
 import { CreateUserDTO, LoginUserDTO } from "../dtos";
-import { User, UserDocument } from "../models";
+import { User } from "../models";
 
 @Injectable()
 export class UsersService
 {
-    constructor(@InjectModel('User') private userModel:Model<UserDocument>){}
+    constructor(@InjectModel('User') private userModel:Model<User>){}
 
-    async create(createUserDTO: CreateUserDTO):Promise<UserDocument>
+    async create(createUserDTO: CreateUserDTO):Promise<User>
     {
         return new this.userModel(createUserDTO).save();
     }
 
-    async findAll(): Promise<UserDocument[]>
+    async findAll(): Promise<User[]>
     {
         return this.userModel.find().exec();
     }
 
  
-    async findByField(userObj:Record<string,any>):Promise<UserDocument[]>
+    async findByField(userObj:Record<string,any>):Promise<User[]>
     {
-        return this.userModel.find<UserDocument>(userObj).exec()
+        return this.userModel.find<User>(userObj).exec()
     }
 
-    async findOneByField(userObj:Record<string,any>):Promise<UserDocument>
+    async findOneByField(userObj:Record<string,any>):Promise<User>
     {
-        return this.userModel.findOne<UserDocument>(userObj).exec()
+        return this.userModel.findOne<User>(userObj).exec()
     }
     async update(filter:Record<string,any>,toUpdate:Record<string,any>,session=null)
     {

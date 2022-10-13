@@ -6,8 +6,6 @@ export enum FinancialTransactionState
     FINANCIAL_TRANSACTION_START="financial_transaction_start",
 }
 
-
-
 export enum FinancialTransactionErrorType
 {
     BUYER_NOT_FOUND_ERROR=-201,

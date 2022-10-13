@@ -27,7 +27,14 @@ import { EmailService } from "./services/emails";
             inject:[ConfigService],
             useFactory:async (configService:ConfigService)=>({
               region:configService.get<string>("AWS_SDK_REGION"),
-              profile:configService.get<string>("AWS_SDK_PROFILE")
+              // profile:configService.get<string>("AWS_SDK_PROFILE"),
+              credentials:{
+                accessKeyId: configService.get<string>("AWS_SDK_ACCESS_KEY"),
+
+                secretAccessKey: configService.get<string>("AWS_SDK_SECRET_KEY")
+              }
+              
+              
             })
           },
           services:[

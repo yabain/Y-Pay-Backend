@@ -1,8 +1,9 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { PERMISSIONS } from "../enum";
 import { Document } from "mongoose";
+import { UserSetting } from "./user-setting.schema";
 
-export type UserDocument = User & Document
+// export type UserDocument = User & Document
 
 @Schema({
     toObject: {
@@ -19,7 +20,7 @@ export type UserDocument = User & Document
         }
       }
 })
-export class User
+export class User extends Document
 {
     @Prop({required:true,default:""})
     firstName:string;
@@ -47,12 +48,24 @@ export class User
     profilePicture:string;
 
     @Prop({default:""})
+    coverPicture:string;
+
+    @Prop({default:""})
     country:string;
 
     @Prop({default:""})
     phoneNumber:string;
 
-    @Prop({required:true})
+    @Prop({default:""})
+    whatsappContact:string;
+
+    @Prop({default:""})
+    skype:string;
+
+    @Prop({default:""})
+    websiteLink:string;
+
+    @Prop({default:""})
     location:string;
 
     @Prop({require:true,enum:PERMISSIONS,default:PERMISSIONS.USER})
@@ -60,6 +73,14 @@ export class User
 
     @Prop({default:Date.now(),required:true})
     createdAt:Date
+
+    @Prop({type:UserSetting,default:{
+      language:"",
+      theme:"",
+      currency:"",
+      isEnglishTimeFormat:false
+    }})
+    userSetting:UserSetting;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

@@ -47,7 +47,7 @@ export class AuthController
     {
         let userCreated=await this.usersService.create(createUserDTO)
         // await this.userEmailService.sendNewUserEmail(userCreated);
-        // await this.userEmailService.sendConfirmationEmail(userCreated);
+        await this.userEmailService.sendConfirmationEmail(userCreated);
         return {
             statusCode:201,
             message:"User Created",

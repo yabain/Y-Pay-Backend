@@ -23,6 +23,8 @@ export default () => ({
 
     AWS_SDK_REGION:process.env.AWS_SDK_REGION,
     AWS_SDK_PROFILE:process.env.AWS_SDK_PROFILE,
+    AWS_SDK_ACCESS_KEY:process.env.AWS_SDK_ACCESS_KEY,
+    AWS_SDK_SECRET_KEY:process.env.AWS_SDK_SECRET_KEY,
     NO_REPLY_EMAIL_SENDER: "no-reply@y-nkap.com",
 
     EMAIL_TEMPLATE_NEW_REGISTRATION:"EMAIL_TEMPLATE_REGISTRATION",
