@@ -137,7 +137,7 @@ export class AuthController
      *  
      * @apiUse apiDefaultResponse
      * 
-     * @apiUse apiBadRequestExampleUser
+     * @apiUse apiBadRequestExampleResetPassword
      */
     @UseGuards(UserJwtAuthGuard)
     @Put("reset-password")
