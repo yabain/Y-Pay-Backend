@@ -1,11 +1,11 @@
-import { Controller, Get,Delete, UseGuards, Req, Param, HttpStatus, NotFoundException } from "@nestjs/common";
+import { Controller, Get,Delete, UseGuards, Req, Param, HttpStatus, NotFoundException, Put } from "@nestjs/common";
 import { UserAuthGuard } from "../guards";
 import { Request } from "express"
 import { ObjectIDValidationPipe } from "src/shared/pipes";
 import { UsersService } from "../services";
 
-@Controller("/user")
-export class UserController
+@Controller("/user/profil")
+export class UserProfilController
 {
     constructor(
         private userService:UsersService
@@ -37,8 +37,8 @@ export class UserController
      * @apiUse apiError
      */
     @UseGuards(UserAuthGuard)
-    @Get("/profil/:id")
-    async getUserProfilById(@Req() request:Request, @Param("id",ObjectIDValidationPipe) id:string)
+    @Get("/:id")
+    async getUserProfilById( @Param("id",ObjectIDValidationPipe) id:string)
     {
         let data = await this.userService.findOneByField({"_id":id})
         if(!data) throw new NotFoundException({
@@ -52,6 +52,41 @@ export class UserController
             data
         }
     }
+
+    /**
+     * @api {delete} /user/profil/:id delete user by id
+     * @apidescription Delete user profile
+     * @apiParam {String} id Users unique ID
+     * @apiName Delete usser
+     * @apiGroup User
+     * @apiUse apiSecurity
+     * @apiSuccess (200 Ok) {Number} statusCode HTTP status code
+     * @apiSuccess (200 Ok) {String} Response Description
+     * 
+     * @apiError (Error 4xx) 401-Unauthorized Token not supplied/invalid token 
+     * @apiError (Error 4xx) 404-NotFound User not found
+     * @apiUse apiError
+     */
+    @UseGuards(UserAuthGuard)
+    @Delete("/:id")
+    async deleteUserById(@Param("id",ObjectIDValidationPipe) id:string)
+    {
+        let data = await this.userService.findOneByField({"_id":id});
+        if(!data || (data && data.isDeleted)) throw new NotFoundException({
+            statusCode: HttpStatus.NOT_FOUND,
+            error:"NotFound",
+            message:["User not found"]
+        })
+
+        await this.userService.update({"_id":id},{isDeleted:true})
+        
+        return {
+            statusCode:HttpStatus.OK,
+            message:"User deleted successfully ",
+        }
+    }
+
+    
 
     
 }
