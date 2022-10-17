@@ -12,35 +12,36 @@ export class UserEmailService
     {
         return this.emailService.sendEmail(
             new Email()
-            .from(this.configService.get<string>("NO_REPLY_EMAIL_SENDER"))
+            .from(this.configService.get<string>("TEAM_EMAIL_SENDER"))
             .to(user.email)
-            .templateVar({})
-            .template(this.configService.get<string>("EMAIL_TEMPLATE_REGISTRATION"))
+            .templateVar({
+                userEmail: `${user.firstName} ${user.lastName}`,
+            })
+            .template(this.configService.get<string>("EMAIL_TEMPLATE_NEW_REGISTRATION"))
         )
     }
 
     sendConfirmationEmail(user)
     {
-        // return this.emailService.sendEmail(
-        //     new Email()
-        //     .from(this.configService.get<string>("NO_REPLY_EMAIL_SENDER"))
-        //     .to(user.email)
-        //     .templateVar({})
-        //     .template(this.configService.get<string>("EMAIL_TEMPLATE_ACCOUNT_CONFIRMATION"))
-        // )
+        // https://www.y-nkap.com/mailconf/email$codeuniquedeconfirm link email confirmation
         const accessToken = this.jwtService.sign({
             email:user.email,
             permissions:[user.permissions],
             sub:user._id
         })
-        let url=`${this.configService.get<string>("PUBLIC_FRONTEND_URL")}/valid-account?token=${accessToken}`
+        let url=`${this.configService.get<string>("PUBLIC_FRONTEND_URL")}mailconf/${accessToken}`
+
         return this.emailService.sendEmail(
             new Email()
-            .subject("Email confirmation")
             .from(this.configService.get<string>("NO_REPLY_EMAIL_SENDER"))
             .to(user.email)
-            .content(`Welcome to Y-Nkap. This is your url confirmation to confirm your account: <a href='${url}'>Confirmation link</a>`)
+            .templateVar({
+                userEmail: `${user.firstName} ${user.lastName}`,
+                confirmationLink:url
+            })
+            .template(this.configService.get<string>("EMAIL_TEMPLATE_ACCOUNT_CONFIRMATION"))
         )
+        
     }
 
     sendTestEmail(user)
