@@ -81,6 +81,9 @@ export class User extends Document
       isEnglishTimeFormat:false
     }})
     userSetting:UserSetting;
+
+    @Prop({default:false})
+    isDeleted:boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
