@@ -1,10 +1,11 @@
-import { Body, Controller,HttpCode,HttpStatus,Post, Req, UseGuards,Get } from "@nestjs/common";
+import { Body, Controller,HttpCode,HttpStatus,Post, Put, Req, UseGuards,Get } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
-import { CreateUserDTO } from "../dtos";
+import { CreateUserDTO, ResetPasswordDTO } from "../dtos";
 import { EmailConfirmedGuard, UserAuthGuard, UserJwtAuthGuard } from "../guards";
 import { AuthService, UsersService } from "../services";
 import { UserEmailService } from "../services/user-email.service";
+import { PasswordUtil } from "../utils";
 
 @ApiTags("User Authentification")
 @Controller("user/auth")
@@ -120,5 +121,34 @@ export class AuthController
 
     }
 
+    /**
+     * @api {put} /user/auth/reset-password reset user password
+     * @apiDescription reset user password
+     * @apiName Reset password
+     * @apiGroup User
+     * @apiUse ResetPassword
+     * 
+     * @apiSuccess (200 Ok) {Number} statusCode HTTP status code
+     * @apiSuccess (200 Ok) {String} Response Description
+     
+     * 
+     * @apiError (Error 4xx) 401-Unauthorized Token not supplied/invalid token 
+     * @apiError (Error 4xx) 400-BadRequest expected field was not submitted or does not have the correct type
+     *  
+     * @apiUse apiDefaultResponse
+     * 
+     * @apiUse apiBadRequestExampleUser
+     */
+    @UseGuards(UserJwtAuthGuard)
+    @Put("reset-password")
+    async resetPassword(@Req() request:Request, @Body() resetPasswordDTO:ResetPasswordDTO)
+    {
+        await this.usersService.update({"email":request.user["email"]},{password:resetPasswordDTO.password})
+        return {
+            statusCode:HttpStatus.OK,
+            message:"Password updated successfully"
+        }
+    }
+   
    
 }

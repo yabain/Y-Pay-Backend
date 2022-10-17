@@ -12,3 +12,8 @@
  * @apiBody {String} createAt Account creation date 
  *
  */
+
+/**
+ * @apiDefine ResetPassword
+ * @apiBody {String} password User password
+ */
