@@ -16,7 +16,14 @@ async function bootstrap() {
     transform:true
   }));
 
-  app.enableCors();
+  app.enableCors({
+    credentials: true,
+    origin:[
+      "http://localhost:3000",
+      "https://dev.y-nkap.com",
+      "https://y-nkap.com"
+    ]
+  });
   app.useGlobalFilters(new MongoExceptionFilter())
   useContainer(app.select(AppModule),{fallbackOnErrors:true});
 
