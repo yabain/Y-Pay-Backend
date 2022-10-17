@@ -15,15 +15,18 @@ async function bootstrap() {
     forbidNonWhitelisted:true,
     transform:true
   }));
-
-  app.enableCors({
+  /**
+   * {
     credentials: true,
     origin:[
       "http://localhost:4200",
       "https://dev.y-nkap.com",
       "https://y-nkap.com"
-    ]
-  });
+    ],
+    methods: ['POST', 'PUT', 'DELETE', 'GET']
+  }
+   */
+  app.enableCors();
   app.useGlobalFilters(new MongoExceptionFilter())
   useContainer(app.select(AppModule),{fallbackOnErrors:true});
 
