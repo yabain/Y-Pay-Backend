@@ -8,6 +8,7 @@ import { UserSetting } from "./user-setting.schema";
 @Schema({
     toObject: {
         transform: function (doc, ret) {
+          delete ret.isDeleted;
           delete ret.password;
           delete ret.__v;
         }
@@ -15,6 +16,7 @@ import { UserSetting } from "./user-setting.schema";
       toJSON: {
         transform: function (doc, ret) {
           delete ret.password;
+          delete ret.isDeleted;
           delete ret.__v;
 
         }

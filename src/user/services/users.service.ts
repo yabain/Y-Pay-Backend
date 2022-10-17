@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose"
 import { Model } from "mongoose";
 import { PartialType } from "@nestjs/mapped-types";
-import { CreateUserDTO, LoginUserDTO } from "../dtos";
+import { CreateUserDTO, LoginUserDTO, UpdateUserDTO } from "../dtos";
 import { User } from "../models";
 
 @Injectable()
@@ -29,6 +29,10 @@ export class UsersService
     async findOneByField(userObj:Record<string,any>):Promise<User>
     {
         return this.userModel.findOne<User>(userObj).exec()
+    }
+    async updateFromClass(updateUserDTO:UpdateUserDTO,userID)
+    {
+        return this.userModel.findByIdAndUpdate(userID,updateUserDTO).setOptions({new:true})
     }
     async update(filter:Record<string,any>,toUpdate:Record<string,any>,session=null)
     {

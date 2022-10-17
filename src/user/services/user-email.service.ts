@@ -23,13 +23,13 @@ export class UserEmailService
 
     sendConfirmationEmail(user)
     {
-        // https://www.y-nkap.com/mailconf/email$codeuniquedeconfirm link email confirmation
+        // https://www.y-nkap.com/mail/link-receive?token={token} link email confirmation
         const accessToken = this.jwtService.sign({
             email:user.email,
             permissions:[user.permissions],
             sub:user._id
         })
-        let url=`${this.configService.get<string>("PUBLIC_FRONTEND_URL")}mailconf/${accessToken}`
+        let url=`${this.configService.get<string>("PUBLIC_FRONTEND_URL")}/mail/link-receive?token=${accessToken}`
 
         return this.emailService.sendEmail(
             new Email()

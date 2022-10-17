@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
-import { AuthController,EmailConfirmationController } from "./controllers";
+import { AuthController,EmailConfirmationController, UserProfilController } from "./controllers";
 import { User, UserSchema } from "./models";
 import { AuthService, UsersService } from "./services";
 import { AuthLocalStrategy } from "./strategies";
@@ -37,7 +37,8 @@ import { EmailConfirmedGuard } from "./guards";
     ],
     controllers:[
         AuthController,
-        EmailConfirmationController
+        EmailConfirmationController,
+        UserProfilController
     ],
     providers:[
         UsersService,
