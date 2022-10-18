@@ -143,7 +143,7 @@ export class AuthController
     @Put("reset-password")
     async resetPassword(@Req() request:Request, @Body() resetPasswordDTO:ResetPasswordDTO)
     {
-        await this.usersService.update({"email":request.user["email"]},{password:resetPasswordDTO.password})
+        await this.usersService.update({"email":request.user["email"]},{password:PasswordUtil.hash(resetPasswordDTO.password)})
         return {
             statusCode:HttpStatus.OK,
             message:"Password updated successfully"

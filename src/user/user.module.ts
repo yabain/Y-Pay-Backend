@@ -25,6 +25,7 @@ import { EmailConfirmedGuard } from "./guards";
                     this.password=PasswordUtil.hash(this.password)
                     next();
                 })
+               
                 return schema;
             }
         }]),
