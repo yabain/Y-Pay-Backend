@@ -30,6 +30,18 @@
  */
 
 /**
+ * @apiDefine apiBadRequestExampleEmailResetPassword
+ * @apiExample {json} Bad Request (Example) 
+ * * HTTP/1.1 400 Bad Request
+ * {
+ *  statusCode: 400
+ *  error: "Bad Request",
+ *  message:[ "email should not be empty"  ]
+ * }
+ * 
+ */
+
+/**
  * @apiDefine apiLoginOrPasswordIncorrectExampleUser
  * @apiExample {json} Login Error (Example) 
  * * HTTP/1.1 401 Unauthorized

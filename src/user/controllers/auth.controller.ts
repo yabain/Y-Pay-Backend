@@ -160,14 +160,13 @@ export class AuthController
      * 
      * @apiSuccess (200 Ok) {Number} statusCode HTTP status code
      * @apiSuccess (200 Ok) {String} Response Description
-     
      * 
-     * @apiError (Error 4xx) 401-Unauthorized Token not supplied/invalid token 
      * @apiError (Error 4xx) 400-BadRequest expected field was not submitted or does not have the correct type
-     *  
+     * @apiError (Error 4xx) 404-NotFound User not found
      * @apiUse apiDefaultResponse
      * 
-     * @apiUse apiBadRequestExampleResetPassword
+     * @apiUse apiBadRequestExampleEmailResetPassword
+     * @apiUse apiError
      */
     @Post("reset-password-link")
     async sendResetPasswordMail(@Body() emailDTO:ConfirmationEmailDTO)
