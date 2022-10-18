@@ -26,13 +26,13 @@ export class FinancialTransactionService
 
     async findAll(): Promise<FinancialTransactionDocument[]>
     {
-        return this.financialTransactionModel.find().exec();
+        return this.financialTransactionModel.find().sort({createdAt:1}).exec();
     }
 
  
     async findByField(userObj:Record<string,any>):Promise<FinancialTransactionDocument[]>
     {
-        return this.financialTransactionModel.find<FinancialTransactionDocument>(userObj).exec()
+        return this.financialTransactionModel.find<FinancialTransactionDocument>(userObj).sort({createdAt:1}).exec()
     }
 
     async findOneByField(userObj:Record<string,any>):Promise<FinancialTransactionDocument>

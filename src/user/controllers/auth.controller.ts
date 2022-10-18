@@ -1,7 +1,7 @@
-import { Body, Controller,HttpCode,HttpStatus,Post, Put, Req, UseGuards,Get } from "@nestjs/common";
+import { Body, Controller,HttpCode,HttpStatus,Post, Put, Req, UseGuards,Get, NotFoundException } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
-import { CreateUserDTO, ResetPasswordDTO } from "../dtos";
+import { ConfirmationEmailDTO, CreateUserDTO, ResetPasswordDTO } from "../dtos";
 import { EmailConfirmedGuard, UserAuthGuard, UserJwtAuthGuard } from "../guards";
 import { AuthService, UsersService } from "../services";
 import { UserEmailService } from "../services/user-email.service";
@@ -147,6 +147,42 @@ export class AuthController
         return {
             statusCode:HttpStatus.OK,
             message:"Password updated successfully"
+        }
+    }
+
+
+    /**
+     * @api {post} /user/auth/reset-password-link reset user password
+     * @apiDescription reset user password
+     * @apiName Reset password
+     * @apiGroup User
+     * @apiUse ResetPassword
+     * 
+     * @apiSuccess (200 Ok) {Number} statusCode HTTP status code
+     * @apiSuccess (200 Ok) {String} Response Description
+     
+     * 
+     * @apiError (Error 4xx) 401-Unauthorized Token not supplied/invalid token 
+     * @apiError (Error 4xx) 400-BadRequest expected field was not submitted or does not have the correct type
+     *  
+     * @apiUse apiDefaultResponse
+     * 
+     * @apiUse apiBadRequestExampleResetPassword
+     */
+    @Post("reset-password-link")
+    async sendResetPasswordMail(@Body() emailDTO:ConfirmationEmailDTO)
+    {
+        let data = await this.usersService.findOneByField({"email":emailDTO.email})
+        if(!data) throw new NotFoundException({
+            statusCode: 404,
+            error:"NotFound",
+            message:["User not found"]
+        })
+
+        await this.userEmailService.sendResetPasswordEmail(data);
+        return {
+            statusCode:HttpStatus.OK,
+            message:"password reset link sent by email with success"
         }
     }
    

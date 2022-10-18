@@ -17,7 +17,7 @@ require("dotenv").config({
  });
  
  // Let's get the template to create/save
- const template = require("./../html/confirm-email-template");
+ const template = require("./../html/reset-password-template");
 
  
  (async () => {

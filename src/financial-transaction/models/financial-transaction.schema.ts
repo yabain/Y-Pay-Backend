@@ -13,12 +13,16 @@ export type FinancialTransactionDocument =  FinancialTransaction & Document;
     toObject: {
         transform: function (doc, ret) {
           delete ret.token;
+          ret.wallet=ret.wallet._id;
+          ret.application=ret.application._id;
           delete ret.__v;
         }
       },
       toJSON: {
         transform: function (doc, ret) {
           delete ret.token;
+          ret.wallet=ret.wallet._id;
+          ret.application=ret.application._id;
           delete ret.__v;
 
         }

@@ -1,10 +1,11 @@
 import { Controller, Get,Delete, UseGuards, Req, Param, HttpStatus, NotFoundException, Put,Body } from "@nestjs/common";
-import { UserJwtAuthGuard } from "../guards";
+import { EmailConfirmedGuard, UserJwtAuthGuard } from "../guards";
 import { Request } from "express"
 import { ObjectIDValidationPipe } from "src/shared/pipes";
 import { UsersService } from "../services";
 import { UpdateUserDTO } from "../dtos";
 
+@UseGuards(EmailConfirmedGuard)
 @UseGuards(UserJwtAuthGuard)
 @Controller("/user/profil")
 export class UserProfilController
@@ -12,6 +13,7 @@ export class UserProfilController
     constructor(
         private userService:UsersService
     ){}
+    
     /**
      * @api {post} /user/profil/:id Get user by id
      * @apidescription Get user details by id
