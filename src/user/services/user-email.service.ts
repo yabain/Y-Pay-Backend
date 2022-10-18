@@ -55,7 +55,7 @@ export class UserEmailService
             this.configService.get<string>("EMAIL_TEMPLATE_RESET_PASSWORD"),
             {
                 userEmail: `${user.firstName} ${user.lastName}`,
-                resetPwdLink:`${this.configService.get<string>("PUBLIC_FRONTEND_URL")}/mail/link-receive?resetTokenPwd${accessToken}`
+                resetPwdLink:`${this.configService.get<string>("PUBLIC_FRONTEND_URL")}/mail/link-receive?resetTokenPwd=${accessToken}`
             },
         )
     }

@@ -19,4 +19,9 @@
  */
 
 
+/**
+ * @apiDefine ResetPasswordEmail
+ * @apiBody {String} email User email
+ */
+
 

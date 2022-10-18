@@ -88,6 +88,7 @@ export class AuthController
      * @apiUse apiBadRequestExampleUser
      * @apiUse apiLoginOrPasswordIncorrectExampleUser
      */
+    @UseGuards(EmailConfirmedGuard)
     @UseGuards(UserAuthGuard)
     @HttpCode(HttpStatus.OK)
     @Post("login")    
@@ -126,11 +127,10 @@ export class AuthController
      * @apiDescription reset user password
      * @apiName Reset password
      * @apiGroup User
+     * @apiUse apiSecurity
      * @apiUse ResetPassword
-     * 
      * @apiSuccess (200 Ok) {Number} statusCode HTTP status code
      * @apiSuccess (200 Ok) {String} Response Description
-     
      * 
      * @apiError (Error 4xx) 401-Unauthorized Token not supplied/invalid token 
      * @apiError (Error 4xx) 400-BadRequest expected field was not submitted or does not have the correct type
@@ -152,11 +152,11 @@ export class AuthController
 
 
     /**
-     * @api {post} /user/auth/reset-password-link reset user password
-     * @apiDescription reset user password
-     * @apiName Reset password
+     * @api {post} /user/auth/reset-password-link reset user password request
+     * @apiDescription Password reset request by email
+     * @apiName Reset password request
      * @apiGroup User
-     * @apiUse ResetPassword
+     * @apiUse ResetPasswordEmail
      * 
      * @apiSuccess (200 Ok) {Number} statusCode HTTP status code
      * @apiSuccess (200 Ok) {String} Response Description
@@ -166,7 +166,6 @@ export class AuthController
      * @apiUse apiDefaultResponse
      * 
      * @apiUse apiBadRequestExampleEmailResetPassword
-     * @apiUse apiError
      */
     @Post("reset-password-link")
     async sendResetPasswordMail(@Body() emailDTO:ConfirmationEmailDTO)
