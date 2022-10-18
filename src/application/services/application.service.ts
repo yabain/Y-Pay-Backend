@@ -52,16 +52,23 @@ export class ApplicationService
 
     async findAll(): Promise<ApplicationDocument[]>
     {
-        return this.appModel.find().exec();
+        return this.findByField({});
     }
 
     async findByField(appObj:Record<string,any>):Promise<ApplicationDocument[]>
     {
-        return this.appModel.find<ApplicationDocument>(appObj).exec()
+        return this.appModel.find<ApplicationDocument>(appObj).sort({createdAt:1}).exec()
     }
 
     async findOneByField(appObj:Record<string,any>):Promise<Application>
     {
         return this.appModel.findOne<Application>(appObj).exec()
+    }
+
+    async findListAppByOwner(userID:string)
+    {
+        let wallets= await this.walletService.findListWalletByOwner(userID)        
+        let apps= await Promise.all(wallets.map((wallet)=> this.findOneByField({"_id":wallet.app}) ))
+        return wallets.map((wallet)=> ({wallet,app:apps.find((app)=> app["_id"].toString()==wallet.app["_id"].toString())}))
     }
 }

@@ -5,6 +5,7 @@ import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
 import { MongoExceptionFilter } from './shared/exceptions';
 import { AddSwaggerDoc } from './shared/docs/swagger';
+import { AllHttpExceptionsFilter } from './shared/filters';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -15,6 +16,7 @@ async function bootstrap() {
     forbidNonWhitelisted:true,
     transform:true
   }));
+
   /**
    * {
     credentials: true,
@@ -27,7 +29,8 @@ async function bootstrap() {
   }
    */
   app.enableCors();
-  app.useGlobalFilters(new MongoExceptionFilter())
+  app.useGlobalFilters(new MongoExceptionFilter());
+  app.useGlobalFilters(new AllHttpExceptionsFilter());
   useContainer(app.select(AppModule),{fallbackOnErrors:true});
 
   AddSwaggerDoc(app);

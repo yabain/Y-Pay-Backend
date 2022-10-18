@@ -43,7 +43,8 @@ import { EmailService } from "./services/emails";
         }),
     ],
     providers:[
-      EmailService
+      EmailService,
+      
     ],
     exports:[
         SecurityModule,

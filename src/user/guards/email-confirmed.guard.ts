@@ -9,13 +9,16 @@ export class EmailConfirmedGuard implements CanActivate
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
         return new Promise<boolean>(async (resolve,reject)=>{
             const request = context.switchToHttp().getRequest();
+            const response = context.switchToHttp().getResponse();
+
             let user=await this.userService.findByField({"email":request.user.email});
             if(user && user.length>0 && user[0].emailConfirmed) return resolve(true);
-            throw new UnauthorizedException({
+            return response.status(HttpStatus.FORBIDDEN).json({
                 statusCode:HttpStatus.FORBIDDEN,
                 error:"EmailConfirmedForbidden",
-                message:"account email is not confirmed"
+                message:["account email is not confirmed"]
             })
+            // return reject(false);
         })
 
     }

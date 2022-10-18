@@ -46,4 +46,14 @@ export class WalletService
         if(wallet.amount<amount) return null;
         return this.update({"_id":walletID},{amount:wallet.amount-amount},session)
     }
+
+    async findByField(walletObj:Record<string,any>):Promise<WalletDocument[]>
+    {
+        return this.walletModel.find<WalletDocument>(walletObj).sort({createdAt:1}).exec()
+    }
+
+    async findListWalletByOwner(userID:string)
+    {
+        return this.findByField({isDeleted:false,owner:userID})
+    }
 }

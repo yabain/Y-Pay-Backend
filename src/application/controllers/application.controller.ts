@@ -9,7 +9,7 @@ import { AuthBasicGuard } from "../guards/auth-basic.guard";
 import { Application, ApplicationSchema } from "../models";
 import { ApplicationService, AuthService } from "../services";
 
-@ApiTags("Application")
+@UseGuards(EmailConfirmedGuard)
 @ApiBearerAuth()
 @Controller("apps")
 export class ApplicationController
@@ -18,7 +18,7 @@ export class ApplicationController
 
     /**
      * 
-     * @api {post} /apps/create create new app
+     * @api {post} /apps create new app
      * @apiDescription create new app
      * @apiName Create apps
      * @apiGroup Application
@@ -30,14 +30,11 @@ export class ApplicationController
      * @apiSuccess (201) {String} Response Description
      * @apiSuccess (201) {Object} data response data
      * @apiSuccess (201) {Object} data.app Application data
-     * @apiSuccess (201) {Object} data.app Wallet data
+     * @apiSuccess (201) {Object} data.wallet Wallet data
      * 
      */
-    @ApiOkResponse()
-    @UseGuards(UserJwtAuthGuard)
-    @UseGuards(EmailConfirmedGuard)
-    @Post('create')
-    @ApiBody({type:CreateAppDTO})
+    @Post()    
+    @UseGuards(UserJwtAuthGuard)    
     async createApp(@Req() request:Request, @Body() createAppDTO:CreateAppDTO)
     {
         
@@ -45,6 +42,32 @@ export class ApplicationController
             statusCode:HttpStatus.CREATED,
             message:"The application was created successfully",
             data: await this.appService.create(createAppDTO,request.user)
+        }
+    }
+
+    /**
+     * @api {get} /apps get list of applications
+     * @apiDescription Allows to obtain the list of applications of the connected user
+     * @apiName List apps
+     * @apiGroup Application
+     * @apiUse apiSecurity
+     * @apiUse apiDefaultResponse
+     * @apiSuccess (201) {Number} statusCode status code
+     * @apiSuccess (201) {String} Response Description
+     * @apiSuccess (201) {Array} data response data
+     * @apiSuccess (201) {Object} data.app Application data
+     * @apiSuccess (201) {Object} data.app Wallet data
+     * @apiSuccess (201) {Number} size Number of applications
+     * 
+     */
+    @UseGuards(UserJwtAuthGuard)
+    @Get()
+    async getAppList(@Req() request:Request)
+    {
+        return {
+            statusCode:HttpStatus.OK,
+            messae:"List of apps",
+            data:await this.appService.findListAppByOwner(request.user["userId"])
         }
     }
 }

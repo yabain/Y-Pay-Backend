@@ -36,6 +36,9 @@ export class Wallet
     
     @Prop({default:Date.now(),required:true})
     createdAt:Date
+
+    @Prop({default:false})
+    isDeleted:false
 }
 
 export const WalletSchema = SchemaFactory.createForClass(Wallet)

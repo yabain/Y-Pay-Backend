@@ -40,7 +40,10 @@ export class Application
     privateKey:string;
     
     @Prop({default:Date.now(),required:true})
-    createdAt:Date
+    createdAt:Date;
+
+    @Prop({default:false})
+    isDeleted:false
 }
 
 export const ApplicationSchema = SchemaFactory.createForClass(Application)
