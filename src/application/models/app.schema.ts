@@ -34,16 +34,24 @@ export class Application
     owner:User;
 
     @Prop({default:uuidv4(),required:true})
-    clientId:string;
+    clientIdSandbox:string;
 
     @Prop({default:uid(256),required:true})
-    privateKey:string;
+    privateKeySandbox:string;
+
+    @Prop({default:uuidv4(),required:true})
+    clientIdProd:string;
+
+    @Prop({default:uid(256),required:true})
+    privateKeyProd:string;
     
     @Prop({default:Date.now(),required:true})
     createdAt:Date;
 
     @Prop({default:false})
-    isDeleted:false
+    isDeleted:false;
+
+    
 }
 
 export const ApplicationSchema = SchemaFactory.createForClass(Application)
