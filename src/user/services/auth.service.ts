@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { ForbiddenException, HttpStatus, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { LoginUserDTO } from "../dtos/login-user.dto";
 import { UserSchema } from "../models";
@@ -20,6 +20,11 @@ export class AuthService
 
   login(user)
   {
+    if(user.isDisabled) throw new ForbiddenException({
+      statusCode:HttpStatus.FORBIDDEN,
+      error:'Authentication blocked',
+      message:["Account Disabled. Contact Support"]
+  });
     const payload = {email:user.email, permissions:[user.permissions],sub:user._id}
     return {
         access_token: this.jwtService.sign(payload)

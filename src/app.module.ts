@@ -8,6 +8,7 @@ import { PaymentMethodModule } from './payment-method/payment-method.module';
 import configuration from './shared/config/configuration';
 import { SharedModule } from './shared/shared.module';
 import { UserModule } from './user/user.module';
+import { ActivityModule } from "./activity/activity.module"
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { UserModule } from './user/user.module';
     ApplicationModule,
     UserModule,
     FinancialTransactionModule,
-    PaymentMethodModule
+    PaymentMethodModule,
+    ActivityModule
   ],
   controllers: [
     AppController

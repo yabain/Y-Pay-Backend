@@ -86,6 +86,9 @@ export class User extends Document
 
     @Prop({default:false})
     isDeleted:boolean;
+
+    @Prop({default:false})
+    isDisabled:boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

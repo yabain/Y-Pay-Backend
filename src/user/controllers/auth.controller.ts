@@ -1,6 +1,7 @@
 import { Body, Controller,HttpCode,HttpStatus,Post, Put, Req, UseGuards,Get, NotFoundException } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
+import { ActivityLoggerService } from "src/activity/services";
 import { ConfirmationEmailDTO, CreateUserDTO, ResetPasswordDTO } from "../dtos";
 import { EmailConfirmedGuard, UserAuthGuard, UserJwtAuthGuard } from "../guards";
 import { AuthService, UsersService } from "../services";
@@ -14,7 +15,8 @@ export class AuthController
     constructor(
         private readonly usersService:UsersService,
         private authService:AuthService,
-        private userEmailService:UserEmailService
+        private userEmailService:UserEmailService,
+        private activityLogService:ActivityLoggerService
     ){}
 
     /**
@@ -49,6 +51,10 @@ export class AuthController
         let userCreated=await this.usersService.create(createUserDTO)
         await this.userEmailService.sendNewUserEmail(userCreated);
         await this.userEmailService.sendConfirmationEmail(userCreated);
+        await this.activityLogService.logActivity({
+            owner:userCreated,
+            description:"New account created"
+        })
         return {
             statusCode:201,
             message:"User Created",
@@ -80,8 +86,9 @@ export class AuthController
      *  
      * @apiSuccess (200 Ok) {String} data.access_token User access token 
      * 
-     * @apiError (Error 4xx) 401-Unauthorized Email/password incorrect
      * @apiError (Error 4xx) 400-BadRequest expected field was not submitted or does not have the correct type
+     * @apiError (Error 4xx) 401-Unauthorized Email/password incorrect
+     * @apiError (Error 4xx) 403-Forbidden Account Disabled. Contact Support
      *  
      * @apiUse apiDefaultResponse
      * 
@@ -95,13 +102,17 @@ export class AuthController
     async login(@Req() request:Request)
     {
         // await this.userEmailService.sendTestEmail(request.user)
+        let data=this.authService.login(request.user)
+        await this.activityLogService.logActivity({
+            owner:request.user,
+            description:"New User Authentication"
+        })
         return {
             statusCode:HttpStatus.OK,
             message:"Authentication Success",
             data:{
-                ...this.authService.login(request.user),
+                ...data,
                 user:request.user
-    
             }
         }
     }

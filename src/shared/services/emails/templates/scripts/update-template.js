@@ -1,14 +1,26 @@
 /**
  * Create and update SES templates for nicer/better emails.
- * @author dassiorleando
+ * @author Yaba-In Team
  */
- const AWS = require("aws-sdk");
- const SES = new AWS.SES({ region: "us-east-2" });
- 
- // Let's get the template to create/save
- const template = require("./vin-template");
+ require("dotenv").config({
+  "path":"./../../../../../../.env.dev"
+})
+const AWS = require("aws-sdk");
+const SES = new AWS.SES({ 
+   region: "eu-central-1",
+  credentials:{
+     accessKeyId:process.env.AWS_SDK_ACCESS_KEY,
 
- 
- (async () => {
-   const result = await SES.updateTemplate(template).promise();
- })();
+     secretAccessKey: process.env.AWS_SDK_SECRET_KEY
+   },
+   
+});
+
+// Let's get the template to create/save
+const template = require("./../html/reset-password-template");
+
+
+(async () => {
+  const result = await SES.updateTemplate(template).promise();
+//   console.log("Env ",process.env)
+})();

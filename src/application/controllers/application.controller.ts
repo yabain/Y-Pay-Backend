@@ -1,6 +1,8 @@
 import { Body, Controller, Get, HttpStatus, Post, Req, UseGuards } from "@nestjs/common"
 import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiOkResponse, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
+import { Activity } from "src/activity/models";
+import { ActivityLoggerService } from "src/activity/services";
 import { EmailConfirmedGuard, UserJwtAuthGuard } from "src/user/guards";
 import { User } from "src/user/models";
 import { Wallet } from "src/wallet/models";
@@ -14,7 +16,17 @@ import { ApplicationService, AuthService } from "../services";
 @Controller("apps")
 export class ApplicationController
 {
-    constructor(private appService:ApplicationService,private appAuthService:AuthService){}
+    constructor(
+        private appService:ApplicationService,
+        private appAuthService:AuthService,
+        private activityLogger:ActivityLoggerService
+        ){
+            // this.activityLogger.setContext(ApplicationController.name)
+            // this.activityLogger.logActivity(this.activityLogger.getLogActivityInstance({
+            //     date:new Date(),
+            //     hasError:true
+            // }))
+        }
 
     /**
      * 

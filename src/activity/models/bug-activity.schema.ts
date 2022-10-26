@@ -1,12 +1,11 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
 import mongoose, { Document } from "mongoose";
 import { User } from "src/user/models";
-import { ErrorLevel } from "../enum";
 
 @Schema({
     toObject:{
         transform(doc, ret, options) {
-            if(ret.owner) ret.owner=ret.owner._id;
+            ret.owner=ret.owner._id;
             delete ret.__v
             delete ret.isDeleted
 
@@ -14,14 +13,16 @@ import { ErrorLevel } from "../enum";
     },
     toJSON:{
         transform(doc, ret, options) {
-            if(ret.owner) ret.owner=ret.owner._id;
+            ret.owner=ret.owner._id;
             delete ret.__v
             delete ret.isDeleted
         },
     }
 })
-export class Activity extends Document
+export class BugActivity extends Document
 {
+    @Prop({default:Date.now(),type:Date})
+    date:Date;
 
     @Prop({type:mongoose.Types.ObjectId,ref:User.name})
     owner:User;
@@ -29,17 +30,20 @@ export class Activity extends Document
     @Prop({default:""})
     description:string;
 
+    @Prop({type:Object,default:{}})
+    request:Record<string,any>;
+
+    @Prop({type:Object, default:{}})
+    response:Record<string,any>;
+
     @Prop({type:Boolean,default:false})
     hasError:Boolean;
-
-    @Prop({enum:ErrorLevel,default:ErrorLevel.INFO})
-    errorLevel:ErrorLevel;
 
     @Prop({type:Object, default:{}})
     otherProps:Record<string,any>;
 
-    @Prop({default:Date.now(),required:true})
-    createdAt:Date
+    @Prop({type:Object, default:{}})
+    error:Record<string,any>;
 }
 
-export const ActivitySchema = SchemaFactory.createForClass(Activity)
+export const BugActivitySchema = SchemaFactory.createForClass(BugActivity)

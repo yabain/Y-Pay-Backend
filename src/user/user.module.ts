@@ -12,6 +12,7 @@ import { AuthJwtStrategy } from "./strategies/auth-jwt.strategy";
 import { SharedModule } from "src/shared/shared.module";
 import { UserEmailService } from "./services/user-email.service";
 import { EmailConfirmedGuard } from "./guards";
+import { ActivityModule } from "src/activity/activity.module";
 
 
 @Module({
@@ -34,7 +35,8 @@ import { EmailConfirmedGuard } from "./guards";
             secret:JWT_CONSTANT.secret,
             signOptions: { expiresIn: JWT_CONSTANT.expiresIn }
         }),
-        SharedModule
+        SharedModule,
+        ActivityModule
     ],
     controllers:[
         AuthController,

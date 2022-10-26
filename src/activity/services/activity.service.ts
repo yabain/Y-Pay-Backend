@@ -14,5 +14,14 @@ export class ActivityService
         return await new this.activityModel(activity).save();
     }
 
+    getInstance(activity:Record<string,any>)
+    {
+        return new this.activityModel(activity)
+    }
+
+    async getActivityByPagination(userId:string, page:number,limit:number)
+    {
+        return this.activityModel.find<Activity>({"_id":userId}).sort({createdAt:1}).limit(limit).skip(page*limit).exec()
+    }
     
 }
