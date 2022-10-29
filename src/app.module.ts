@@ -9,6 +9,7 @@ import configuration from './shared/config/configuration';
 import { SharedModule } from './shared/shared.module';
 import { UserModule } from './user/user.module';
 import { ActivityModule } from "./activity/activity.module"
+import { FileModule } from './files/file.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { ActivityModule } from "./activity/activity.module"
     UserModule,
     FinancialTransactionModule,
     PaymentMethodModule,
-    ActivityModule
+    ActivityModule,
+    FileModule
   ],
   controllers: [
     AppController

@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
-import { SES } from "aws-sdk";
+import { S3, SES } from "aws-sdk";
 import { AwsSdkModule } from "nest-aws-sdk";
 import configuration from "./config/configuration";
 import { SecurityModule } from "./security/security.module";
@@ -38,7 +38,8 @@ import { EmailService } from "./services/emails";
             })
           },
           services:[
-            SES
+            SES,
+            S3
           ]
         }),
     ],
