@@ -10,6 +10,7 @@ import { SharedModule } from './shared/shared.module';
 import { UserModule } from './user/user.module';
 import { ActivityModule } from "./activity/activity.module"
 import { FileModule } from './files/file.module';
+import { TicketModule } from './ticket/ticket.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { FileModule } from './files/file.module';
     FinancialTransactionModule,
     PaymentMethodModule,
     ActivityModule,
-    FileModule
+    FileModule,
+    TicketModule
   ],
   controllers: [
     AppController

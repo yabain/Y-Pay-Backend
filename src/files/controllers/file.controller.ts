@@ -40,7 +40,6 @@ export class FileController
     }))
     async uploadFiles(@UploadedFiles() files:Express.Multer.File[])
     {
-        console.log("Files ",files)
         try{
             let filesUploaded=await this.uploadFileService.updloadFileToS3(files)
             return {

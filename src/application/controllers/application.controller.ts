@@ -11,7 +11,7 @@ import { AuthBasicGuard } from "../guards/auth-basic.guard";
 import { Application, ApplicationSchema } from "../models";
 import { ApplicationService, AuthService } from "../services";
 
-@UseGuards(EmailConfirmedGuard)
+// @UseGuards(EmailConfirmedGuard)
 @ApiBearerAuth()
 @Controller("apps")
 export class ApplicationController

@@ -17,7 +17,7 @@ export class UserProfilController
     /**
      * @api {post} /user/profil/:id Get user by id
      * @apidescription Get user details by id
-     * @apiParam {String} id Users unique ID
+     * @apiParam {String} id User unique ID
      * @apiName Get profil
      * @apiGroup User
      * @apiUse apiSecurity
