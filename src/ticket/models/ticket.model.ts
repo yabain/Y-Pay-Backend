@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
 import mongoose, { Document, Mongoose } from "mongoose"
 import { Application } from "src/application/models";
+import { File } from "src/files/models";
 import { User } from "src/user/models";
 import { TicketState } from "../enums";
 
@@ -40,8 +41,8 @@ export class Ticket extends Document
     @Prop({enum:TicketState,default:TicketState.CLOSED})
     state:TicketState;
 
-    @Prop({type:[String],default:[]})
-    files:string[]
+    @Prop({type:[mongoose.Types.ObjectId],ref:File.name,default:[]})
+    files:mongoose.Types.ObjectId[]
 
     @Prop({type:mongoose.Types.ObjectId,ref:User.name})
     closedBy:User;

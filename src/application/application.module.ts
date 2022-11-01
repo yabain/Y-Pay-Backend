@@ -1,7 +1,8 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { PassportModule } from "@nestjs/passport";
 import { ActivityModule } from "src/activity/activity.module";
+import { TicketModule } from "src/ticket/ticket.module";
 import { UserModule } from "src/user/user.module";
 import { WalletModule } from "src/wallet/wallet.module";
 import { ApplicationController, AuthController } from "./controllers";
@@ -16,7 +17,8 @@ import { BasicStrategy } from "./stategies";
         UserModule,
         WalletModule,
         PassportModule,
-        ActivityModule
+        ActivityModule,
+        forwardRef(()=> TicketModule)
     ],
     controllers:[ApplicationController,AuthController],
     providers:[ApplicationService,BasicStrategy,AuthService],

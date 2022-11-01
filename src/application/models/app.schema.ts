@@ -3,6 +3,8 @@ import { uid } from "rand-token";
 import { v4 as uuidv4 } from 'uuid';
 import mongoose, { Document } from 'mongoose';
 import { User } from '../../user/models';
+import { CanUseInProdState } from '../enum';
+import { File } from 'src/files/models';
 
 export type ApplicationDocument =  Application & Document;
 
@@ -51,7 +53,11 @@ export class Application
     @Prop({default:false})
     isDeleted:false;
 
-    
+    @Prop({type:[mongoose.Types.ObjectId],ref:File.name,default:[]})
+    files:mongoose.Types.ObjectId[]
+
+    @Prop({enum:CanUseInProdState, default:CanUseInProdState.SANDBOX})
+    canUseInProdModeState:CanUseInProdState
 }
 
 export const ApplicationSchema = SchemaFactory.createForClass(Application)

@@ -9,7 +9,7 @@ export class ActivityController
     constructor(private activityService:ActivityService){}
     
     /**
-     * @api {put} /user/historry/:id?page&limit update user profil by id
+     * @api {put} /user/historry/:id?page=&limit= update user profil by id
      * @apidescription Update user profil by id
      * @apiParam {String} id Users unique ID
      * @apiParam {Number} page Page number
