@@ -11,10 +11,9 @@ export class FileS3UploadService
     constructor(
         @InjectAwsService(S3) private s3Service:S3,
         private configService:ConfigService,
-        private fileService:FileService
     ){}
 
-    async updloadFileToS3(files:Express.Multer.File[])
+    async updloadFileToS3(files:Express.Multer.File[]):Promise<Record<string,any>[]>
     {
         return new Promise((resolve,reject)=>{
             Promise.all(files.map((file)=> this.s3Service.upload({
@@ -23,14 +22,13 @@ export class FileS3UploadService
                 Key:`${file.originalname}`
             }).promise()))
             .then((result)=>{
-                return result.map((r)=>this.fileService.create({
+                resolve(result.map((r)=>({
                     url:r.Location,
                     key:r.Key,
                     name:r.Key.split("-")[1],
                     bucket:r.Bucket
-                }))
+                })))
             })
-            .then((result)=>resolve(result))
             .catch((error)=>{
                 // console.log("Error ",error)
                 reject(new InternalServerErrorException())

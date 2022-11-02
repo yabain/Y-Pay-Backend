@@ -20,7 +20,10 @@ export class BasicStrategy extends PassportStrategy(Strategy)
 
     async validate(username,password):Promise<Application>
     {
-        let app=await this.appService.findOneByField({clientId:username,privateKey:password})
+        let app=await this.appService.findOneByField({$or:[
+            {clientIdSandbox:username,privateKeySandbox:password},
+            {clientIdProd:username,privateKeyProd:password}
+        ]})
         if(app) return app;
         throw new UnauthorizedException({
             statusCode:HttpStatus.UNAUTHORIZED,

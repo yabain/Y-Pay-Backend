@@ -63,4 +63,14 @@ export class TicketService
         return this.findByField({refNumber:ref})
     }
 
+    async update(filter:Record<string,any>,toUpdate:Record<string,any>,session=null)
+    {
+        return this.ticketModel.findOneAndUpdate(filter,toUpdate,{session,new:true});
+    }
+
+    addFile(filter:Record<string,any>,files,session=null)
+    {
+        return this.update(filter,{$push:{files}},session)
+    }
+
 }

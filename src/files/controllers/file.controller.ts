@@ -1,13 +1,16 @@
-import { Controller, FileTypeValidator, Get, HttpException, HttpStatus, ParseFilePipe, ParseFilePipeBuilder, Post, UnprocessableEntityException, UploadedFile, UploadedFiles, UseInterceptors } from "@nestjs/common"
-import { AnyFilesInterceptor, FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
+import { Controller,Param,  Get,  HttpStatus,  Post, UnprocessableEntityException,  UploadedFiles, UseInterceptors, UseGuards } from "@nestjs/common"
+import {  FilesInterceptor } from "@nestjs/platform-express";
 import * as path from 'path';
-import { FileS3UploadService } from "../services";
+import { ObjectIDValidationPipe } from "src/shared/pipes";
+import { UserJwtAuthGuard } from "src/user/guards";
+import { FileService } from "../services";
 
 
 @Controller("files")
+@UseGuards(UserJwtAuthGuard)
 export class FileController
 {
-    constructor(private uploadFileService:FileS3UploadService){}
+    constructor(private fileService:FileService){}
 
 
     /**
@@ -23,7 +26,7 @@ export class FileController
      * @apiError (Error 4xx) 401-Unauthorized Token not supplied/invalid token 
      * @apiUse apiError
      */
-    @Post("upload")
+    @Post("upload/:ticketID")
     @UseInterceptors(FilesInterceptor('files',20,{
         fileFilter:(req, file, callback) => {
             let ext = path.extname(file.originalname);
@@ -38,10 +41,11 @@ export class FileController
             return callback(null, true);
           }
     }))
-    async uploadFiles(@UploadedFiles() files:Express.Multer.File[])
+    async uploadFiles(@UploadedFiles() files:Express.Multer.File[], @Param("ticketID", ObjectIDValidationPipe) ticketID:string)
     {
         try{
-            let filesUploaded=await this.uploadFileService.updloadFileToS3(files)
+            let filesUploaded=await this.fileService.uploadFile(files,ticketID)
+            // console.log("File ",filesUploaded)
             return {
                 statusCode:HttpStatus.CREATED,
                 message:"File(s) uploaded successfully",
