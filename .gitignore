@@ -398,7 +398,7 @@ Temporary Items
 # .env.dev
 .env.prod
 # dist
-dist/activity/*
+# dist/activity/*
 dist/application/*
 dist/files/*
 dist/financial-payment/*
