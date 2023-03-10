@@ -401,7 +401,7 @@ Temporary Items
 # dist/activity/*
 # dist/application/*
 # dist/files/*
-dist/financial-payment/*
+# dist/financial-payment/*
 dist/financial-transaction/*
 dist/payment-method/*
 dist/user/*
