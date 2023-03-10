@@ -395,7 +395,7 @@ Temporary Items
 =======
 # Local
 .env
-.env.dev
+# .env.dev
 .env.prod
 dist
 docs/*
