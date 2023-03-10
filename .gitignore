@@ -403,7 +403,7 @@ Temporary Items
 # dist/files/*
 # dist/financial-payment/*
 # dist/financial-transaction/*
-dist/payment-method/*
+# dist/payment-method/*
 dist/user/*
 dist/shared/*
 dist/ticket/*
