@@ -399,7 +399,7 @@ Temporary Items
 .env.prod
 # dist
 # dist/activity/*
-dist/application/*
+# dist/application/*
 dist/files/*
 dist/financial-payment/*
 dist/financial-transaction/*
