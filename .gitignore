@@ -407,7 +407,7 @@ Temporary Items
 # dist/user/*
 # dist/shared/*
 # dist/ticket/*
-dist/wallet/*
+# dist/wallet/*
 
 
 docs/*
