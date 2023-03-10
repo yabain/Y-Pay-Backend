@@ -397,7 +397,19 @@ Temporary Items
 .env
 # .env.dev
 .env.prod
-dist
+# dist
+dist/activity/*
+dist/application/*
+dist/files/*
+dist/financial-payment/*
+dist/financial-transaction/*
+dist/payment-method/*
+dist/user/*
+dist/shared/*
+dist/ticket/*
+dist/wallet/*
+
+
 docs/*
 
 # Elastic Beanstalk Files
