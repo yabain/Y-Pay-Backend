@@ -404,7 +404,7 @@ Temporary Items
 # dist/financial-payment/*
 # dist/financial-transaction/*
 # dist/payment-method/*
-dist/user/*
+# dist/user/*
 dist/shared/*
 dist/ticket/*
 dist/wallet/*
