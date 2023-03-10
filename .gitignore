@@ -400,7 +400,7 @@ Temporary Items
 # dist
 # dist/activity/*
 # dist/application/*
-dist/files/*
+# dist/files/*
 dist/financial-payment/*
 dist/financial-transaction/*
 dist/payment-method/*
