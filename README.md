@@ -1,3 +1,22 @@
+<h1 align="center">Y-Nkap</h1>
+
+<p align="center">
+  <br>
+  <img src="./y_logo.png" alt="Y-Nkap logo" width="100%" height="100%"/>
+  <br><br>
+  <i><b> Y-Nkap: </b>a platform (integrator) to manage payments on all merchant web sites.
+    <br>Developed by Yaba-In, a software development company (desktop, web and mobile).</i>
+  <br>
+</p>
+
+<p align="center">By:
+  <a href="https://yaba-in.com" target="_blank"><strong>Yaba-In</strong></a>
+  <br>
+</p>
+
+<p align="center">Using:
+  <br>
+</p>
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
@@ -21,6 +40,9 @@
 </p>
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+
+
+<hr>
 
 ## Description
 
