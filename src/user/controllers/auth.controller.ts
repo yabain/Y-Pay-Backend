@@ -49,8 +49,8 @@ export class AuthController
     async register(@Body() createUserDTO:CreateUserDTO)
     {
         let userCreated=await this.usersService.create(createUserDTO)
-        await this.userEmailService.sendNewUserEmail(userCreated);
-        await this.userEmailService.sendConfirmationEmail(userCreated);
+        // await this.userEmailService.sendNewUserEmail(userCreated);
+        // await this.userEmailService.sendConfirmationEmail(userCreated);
         await this.activityLogService.logActivity({
             owner:userCreated,
             description:"New account created"

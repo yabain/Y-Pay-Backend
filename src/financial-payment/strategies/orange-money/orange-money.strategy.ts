@@ -1,4 +1,5 @@
 import { HttpService } from "@nestjs/axios";
+import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { map } from "rxjs";
 import { PaymentMethodStrategy } from "src/financial-payment/interfaces";
@@ -7,6 +8,7 @@ import { FinancialTransaction } from "src/financial-transaction/models";
 import { ERROR_CODE } from "src/shared/config/errors";
 import { MtnResponseStatus } from "../mtn-money";
 
+@Injectable()
 export class OrangeMoneyStrategyPayment implements PaymentMethodStrategy
 {
     constructor(private configService:ConfigService,private readonly httpService:HttpService){}
@@ -14,11 +16,14 @@ export class OrangeMoneyStrategyPayment implements PaymentMethodStrategy
     getToken():Promise<string>
     {
         return new Promise((resolve,reject)=>{
+            process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
+            
             this.httpService.request({
                 url:`${this.configService.get<string>("OM_API_PATH")}/token/`,
                 method:"post",
                 headers:{
-                    Authorization:`Basic ${Buffer.from(this.configService.get<string>("OM_API_CONSUMER_KEY")+":"+this.configService.get<string>("OM_API_CONSUMER_SECRET")).toString('base64')}`,
+                    // Authorization:`Basic ${Buffer.from(this.configService.get<string>("OM_API_CONSUMER_KEY")+":"+this.configService.get<string>("OM_API_CONSUMER_SECRET")).toString('base64')}`,
+                    Authorization:`Basic ${this.configService.get<string>("OM_API_AUTHORIZATION_HEADER")}`,
                     "grant_type": "client_credentials"
                 }
             })

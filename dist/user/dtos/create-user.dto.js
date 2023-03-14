@@ -80,5 +80,10 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateUserDTO.prototype, "location", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsMobilePhone)("any"),
+    __metadata("design:type", String)
+], CreateUserDTO.prototype, "phoneNumber", void 0);
 exports.CreateUserDTO = CreateUserDTO;
 //# sourceMappingURL=create-user.dto.js.map

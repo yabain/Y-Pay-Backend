@@ -27,11 +27,6 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsMobilePhone)("any"),
     __metadata("design:type", String)
-], UpdateUserDTO.prototype, "phoneNumber", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsMobilePhone)("any"),
-    __metadata("design:type", String)
 ], UpdateUserDTO.prototype, "whatsappContact", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),

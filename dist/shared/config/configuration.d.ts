@@ -26,5 +26,6 @@ declare const _default: () => {
     EMAIL_TEMPLATE_RESET_PASSWORD: string;
     PUBLIC_FRONTEND_URL: string;
     AWS_SDK_UPLOAD_FILE_BUCKET_NAME: string;
+    OM_API_AUTHORIZATION_HEADER: string;
 };
 export default _default;

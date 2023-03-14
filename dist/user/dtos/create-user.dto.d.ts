@@ -6,4 +6,5 @@ export declare class CreateUserDTO {
     profilePicture: string;
     country: string;
     location: string;
+    phoneNumber: string;
 }

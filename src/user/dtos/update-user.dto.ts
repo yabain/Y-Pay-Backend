@@ -14,10 +14,6 @@ export class UpdateUserDTO extends PartialType(CreateUserDTO){
 
     @IsOptional()
     @IsMobilePhone("any")
-    phoneNumber:string;
-
-    @IsOptional()
-    @IsMobilePhone("any")
     whatsappContact:string;
 
     @IsOptional()
