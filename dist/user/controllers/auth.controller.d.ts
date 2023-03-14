@@ -1,4 +1,3 @@
-/// <reference types="passport" />
 import { HttpStatus } from "@nestjs/common";
 import { Request } from "express";
 import { ActivityLoggerService } from "src/activity/services";
